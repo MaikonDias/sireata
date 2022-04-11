@@ -446,57 +446,33 @@ public class AtaDAO {
 	}
 	
 	public void publicar(int idAta, byte[] documento) throws SQLException{
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.prepareStatement("UPDATE atas SET documento=?, dataPublicacao=?, publicada=1, aceitarComentarios=0 WHERE publicada=0 AND idAta=?");
+				
+		try(Connection conn = ConnectionDAO.getInstance().getConnection();
+			PreparedStatement stmt = conn.prepareStatement("UPDATE atas SET documento=?, dataPublicacao=?, publicada=1, aceitarComentarios=0 WHERE publicada=0 AND idAta=?");){	
 		
 			stmt.setBytes(1, documento);
 			stmt.setTimestamp(2, new java.sql.Timestamp(DateUtils.getNow().getTime().getTime()));
 			stmt.setInt(3, idAta);
 			
 			stmt.execute();
-		}finally{
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
 		}
 	}
 	
 	public void liberarComentarios(int idAta) throws SQLException{
-		Connection conn = null;
-		Statement stmt = null;
 		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.createStatement();
+		try(Connection conn = ConnectionDAO.getInstance().getConnection();
+			Statement stmt = conn.createStatement();){
 		
 			stmt.execute("UPDATE atas SET aceitarComentarios=1 WHERE publicada=0 AND idAta=" + String.valueOf(idAta));
-		}finally{
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
 		}
 	}
 	
 	public void bloquearComentarios(int idAta) throws SQLException{
-		Connection conn = null;
-		Statement stmt = null;
 		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.createStatement();
+		try(Connection conn = ConnectionDAO.getInstance().getConnection();
+			Statement stmt = conn.createStatement();){
 		
 			stmt.execute("UPDATE atas SET aceitarComentarios=0 WHERE idAta=" + String.valueOf(idAta));
-		}finally{
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
 		}
 	}
 	

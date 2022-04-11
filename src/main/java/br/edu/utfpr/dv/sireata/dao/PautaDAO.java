@@ -31,12 +31,7 @@ public class PautaDAO {
 				return null;
 			}
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			closeConn(conn,stmt,rs);
 		}
 	}
 	
@@ -59,12 +54,7 @@ public class PautaDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			closeConn(conn,stmt,rs);
 		}
 	}
 	
@@ -104,29 +94,16 @@ public class PautaDAO {
 			
 			return pauta.getIdPauta();
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			closeConn(conn,stmt,rs);
 		}
 	}
 	
 	public void excluir(int id) throws SQLException{
-		Connection conn = null;
-		Statement stmt = null;
 		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.createStatement();
+		try(Connection conn = ConnectionDAO.getInstance().getConnection();
+				Statement stmt = conn.createStatement();){
 		
 			stmt.execute("DELETE FROM pautas WHERE idPauta=" + String.valueOf(id));
-		}finally{
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
 		}
 	}
 	
@@ -142,4 +119,12 @@ public class PautaDAO {
 		return pauta;
 	}
 
+	public void closeConn(Connection conn, Statement stmt, ResultSet rs) throws SQLException{
+		if((rs != null) && !rs.isClosed())
+			rs.close();
+		if((stmt != null) && !stmt.isClosed())
+			stmt.close();
+		if((conn != null) && !conn.isClosed())
+			conn.close();
+	}
 }
