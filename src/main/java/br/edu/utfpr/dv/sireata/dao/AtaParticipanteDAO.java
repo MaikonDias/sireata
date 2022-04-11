@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.utfpr.dv.sireata.model.AtaParticipante;
+import br.edu.utfpr.dv.sireata.util.UtilDAO;
 
-public class AtaParticipanteDAO {
+public class AtaParticipanteDAO extends UtilDAO {
 	
 	public AtaParticipante buscarPorId(int id) throws SQLException{
 		Connection conn = null;
@@ -127,14 +128,4 @@ public class AtaParticipanteDAO {
 		
 		return participante;
 	}
-	
-	public void closeConn(Connection conn, Statement stmt, ResultSet rs) throws SQLException{
-		if((rs != null) && !rs.isClosed())
-			rs.close();
-		if((stmt != null) && !stmt.isClosed())
-			stmt.close();
-		if((conn != null) && !conn.isClosed())
-			conn.close();
-	}
-
 }

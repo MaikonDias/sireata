@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.utfpr.dv.sireata.model.Usuario;
+import br.edu.utfpr.dv.sireata.util.UtilDAO;
 
-public class UsuarioDAO {
+public class UsuarioDAO extends UtilDAO {
 	
 	public Usuario buscarPorLogin(String login) throws SQLException{
 		Connection conn = null;
@@ -246,15 +247,6 @@ public class UsuarioDAO {
 		}finally{
 			closeConn(conn,stmt,rs);
 		}
-	}
-	
-	public void closeConn(Connection conn, Statement stmt, ResultSet rs) throws SQLException{
-		if((rs != null) && !rs.isClosed())
-			rs.close();
-		if((stmt != null) && !stmt.isClosed())
-			stmt.close();
-		if((conn != null) && !conn.isClosed())
-			conn.close();
 	}
 
 }

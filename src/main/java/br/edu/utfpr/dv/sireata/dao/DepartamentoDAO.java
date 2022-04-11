@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.utfpr.dv.sireata.model.Departamento;
+import br.edu.utfpr.dv.sireata.util.UtilDAO;
 
-public class DepartamentoDAO {
+public class DepartamentoDAO extends UtilDAO {
 
 	public Departamento buscarPorId(int id) throws SQLException{
 		Connection conn = null;
@@ -231,14 +232,5 @@ public class DepartamentoDAO {
 		departamento.getCampus().setNome(rs.getString("nomeCampus"));
 		
 		return departamento;
-	}
-	
-	public void closeConn(Connection conn, Statement stmt, ResultSet rs) throws SQLException{
-		if((rs != null) && !rs.isClosed())
-			rs.close();
-		if((stmt != null) && !stmt.isClosed())
-			stmt.close();
-		if((conn != null) && !conn.isClosed())
-			conn.close();
 	}
 }

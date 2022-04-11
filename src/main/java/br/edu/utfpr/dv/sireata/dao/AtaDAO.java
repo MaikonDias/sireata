@@ -12,8 +12,9 @@ import java.util.List;
 import br.edu.utfpr.dv.sireata.model.Ata;
 import br.edu.utfpr.dv.sireata.model.Ata.TipoAta;
 import br.edu.utfpr.dv.sireata.util.DateUtils;
+import br.edu.utfpr.dv.sireata.util.UtilDAO;
 
-public class AtaDAO {
+public class AtaDAO extends UtilDAO {
 	
 	public Ata buscarPorId(int id) throws SQLException{
 		Connection conn = null;
@@ -612,14 +613,4 @@ public class AtaDAO {
 				conn.close();
 		}
 	}
-	
-	public void closeConn(Connection conn, Statement stmt, ResultSet rs) throws SQLException{
-		if((rs != null) && !rs.isClosed())
-			rs.close();
-		if((stmt != null) && !stmt.isClosed())
-			stmt.close();
-		if((conn != null) && !conn.isClosed())
-			conn.close();
-	}
-
 }

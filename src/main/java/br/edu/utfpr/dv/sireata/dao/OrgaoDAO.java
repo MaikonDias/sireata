@@ -11,8 +11,9 @@ import java.util.List;
 import br.edu.utfpr.dv.sireata.model.Orgao;
 import br.edu.utfpr.dv.sireata.model.OrgaoMembro;
 import br.edu.utfpr.dv.sireata.model.Usuario;
+import br.edu.utfpr.dv.sireata.util.UtilDAO;
 
-public class OrgaoDAO {
+public class OrgaoDAO extends UtilDAO {
 	
 	public Orgao buscarPorId(int id) throws SQLException{
 		Connection conn = null;
@@ -354,14 +355,5 @@ public class OrgaoDAO {
 		}
 		
 		return orgao;
-	}
-	
-	public void closeConn(Connection conn, Statement stmt, ResultSet rs) throws SQLException{
-		if((rs != null) && !rs.isClosed())
-			rs.close();
-		if((stmt != null) && !stmt.isClosed())
-			stmt.close();
-		if((conn != null) && !conn.isClosed())
-			conn.close();
 	}
 }

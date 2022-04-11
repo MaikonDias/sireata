@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.utfpr.dv.sireata.model.Anexo;
+import br.edu.utfpr.dv.sireata.util.UtilDAO;
 
-public class AnexoDAO {
+public class AnexoDAO extends UtilDAO {
 	
 	public Anexo buscarPorId(int id) throws SQLException{
 		Connection conn = null;
@@ -119,15 +120,6 @@ public class AnexoDAO {
 		anexo.setArquivo(rs.getBytes("arquivo"));
 		
 		return anexo;
-	}
-	
-	private void closeConn(Connection conn, Statement stmt, ResultSet rs) throws SQLException{
-		if((rs != null) && !rs.isClosed())
-			rs.close();
-		if((stmt != null) && !stmt.isClosed())
-			stmt.close();
-		if((conn != null) && !conn.isClosed())
-			conn.close();
 	}
 
 }
